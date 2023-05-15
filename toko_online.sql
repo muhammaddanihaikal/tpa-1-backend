@@ -157,3 +157,23 @@ SELECT * FROM kategori;
 SELECT * FROM pelanggan;
 SELECT * FROM produk;
 SELECT * FROM transaksi;
+
+-- merubah data
+UPDATE kategori SET nama = 'Komputer' WHERE id = 1;
+UPDATE pelanggan SET nama = 'John Wick', no_hp = '08123456788', alamat = 'Jalan Merdeka No. 11' WHERE id = 1;
+UPDATE pUPDATE transaksi SET jumlah = 2, total_harga = 30000 WHERE id = 1;
+
+-- menghapus data
+DELETE FROM kategori WHERE id = 1;
+DELETE FROM pelanggan WHERE id = 1;
+DELETE FROM produk WHERE id = 1;
+DELETE FROM transaksi WHERE id = 1;
+
+-- menghapus tabel
+DROP TABLE IF EXISTS transaksi;
+DROP TABLE IF EXISTS produk;
+DROP TABLE IF EXISTS kategori;
+DROP TABLE IF EXISTS pelanggan;
+
+-- menghapus database
+DROP DATABASE toko_online;
