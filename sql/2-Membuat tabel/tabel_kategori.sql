@@ -1,0 +1,5 @@
+CREATE TABLE kategori (
+  id INT NOT NULL AUTO_INCREMENT,
+  nama VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+);
