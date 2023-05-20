@@ -1,5 +1,0 @@
-CREATE TABLE kategori (
-  id INT NOT NULL,
-  nama VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
-);
