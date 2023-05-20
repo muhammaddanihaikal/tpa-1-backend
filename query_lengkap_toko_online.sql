@@ -20,7 +20,7 @@ CREATE TABLE pelanggan (
 );
 
 CREATE TABLE produk (
-  id INT NOT NULL ,
+  id INT NOT NULL,
   nama VARCHAR(255) NOT NULL,
   harga INT NOT NULL,
   deskripsi TEXT,
@@ -30,7 +30,7 @@ CREATE TABLE produk (
 );
 
 CREATE TABLE transaksi (
-  id INT NOT NULL ,
+  id INT NOT NULL,
   pelanggan_id INT NOT NULL,
   produk_id INT NOT NULL,
   jumlah INT NOT NULL,
@@ -162,7 +162,8 @@ SELECT * FROM transaksi;
 -- merubah data
 UPDATE kategori SET nama = 'Komputer' WHERE id = 1;
 UPDATE pelanggan SET nama = 'John Wick', no_hp = '08123456788', alamat = 'Jalan Merdeka No. 11' WHERE id = 1;
-UPDATE pUPDATE transaksi SET jumlah = 2, total_harga = 30000 WHERE id = 1;
+UPDATE produk SET nama = 'MacBook Pro', harga = 20000, deskripsi = 'Laptop terbaru dari Apple' WHERE id = 1;
+UPDATE transaksi SET jumlah = 2, total_harga = 30000 WHERE id = 1;
 
 -- menghapus data
 DELETE FROM transaksi WHERE id = 1;
@@ -178,3 +179,33 @@ DROP TABLE IF EXISTS pelanggan;
 
 -- menghapus database
 DROP DATABASE toko_online;
+
+-- kasus
+-- 1 pelanggan membeli 3 barang yang berbeda.
+SELECT p.nama AS 'Nama Pelanggan'
+FROM pelanggan p
+JOIN transaksi t ON p.id = t.pelanggan_id
+GROUP BY p.id
+HAVING COUNT(DISTINCT t.produk_id) = 3;
+
+-- Melihat 3 produk yang paling sering dibeli oleh pelanggan.
+SELECT pr.nama AS 'Nama Produk', COUNT(*) AS 'Jumlah Pembelian'
+FROM transaksi t
+JOIN produk pr ON t.produk_id = pr.id
+GROUP BY t.produk_id
+ORDER BY COUNT(*) DESC
+LIMIT 3;
+
+-- Melihat Kategori barang yang paling banyak barangnya.
+SELECT k.nama AS 'Nama Kategori', COUNT(*) AS 'Jumlah Barang'
+FROM produk p
+JOIN kategori k ON p.kategori_id = k.id
+GROUP BY k.id
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+-- Nominal rata-rata transaksi yang dilakukan oleh pelanggan dalam 1 bulan terakhir.
+SELECT pelanggan_id, AVG(total_harga) AS rata_rata_transaksi
+FROM transaksi
+WHERE tanggal >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+GROUP BY pelanggan_id;

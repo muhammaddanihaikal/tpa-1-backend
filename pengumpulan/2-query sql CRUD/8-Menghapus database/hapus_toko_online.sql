@@ -1,0 +1,1 @@
+DROP DATABASE toko_online;
